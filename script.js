@@ -84,9 +84,11 @@
     });
   });
 
-  /* ---------------- Contact form validation --------------- */
+  /* ---------------- Contact form validation + submission (Web3Forms) --------------- */
   const form = document.getElementById('contactForm');
   const success = document.getElementById('formSuccess');
+  const formError = document.getElementById('formError');
+  const submitBtn = document.getElementById('cf-submit-btn');
 
   function setError(id, msg){
     const el = document.getElementById('err-' + id);
@@ -112,11 +114,42 @@
   form.addEventListener('submit', function(e){
     e.preventDefault();
     success.classList.remove('show');
-    if (validate()){
-      success.classList.add('show');
-      form.reset();
-      setTimeout(function(){ success.classList.remove('show'); }, 6000);
+    formError.classList.remove('show');
+    if (!validate()) return;
+
+    const accessKey = form.querySelector('input[name="access_key"]').value;
+    if (!accessKey || accessKey === 'YOUR_ACCESS_KEY_HERE'){
+      formError.querySelector('svg').nextSibling.textContent =
+        ' Contact form isn\u2019t configured yet \u2014 add a Web3Forms access key in index.html.';
+      formError.classList.add('show');
+      return;
     }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending\u2026';
+
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(Object.fromEntries(new FormData(form)))
+    })
+      .then(function(res){ return res.json().then(function(data){ return { ok: res.ok, data: data }; }); })
+      .then(function(result){
+        if (result.ok && result.data.success){
+          success.classList.add('show');
+          form.reset();
+          setTimeout(function(){ success.classList.remove('show'); }, 6000);
+        } else {
+          formError.classList.add('show');
+        }
+      })
+      .catch(function(){
+        formError.classList.add('show');
+      })
+      .finally(function(){
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message';
+      });
   });
 
   /* ---------------- Certificate modal --------------- */

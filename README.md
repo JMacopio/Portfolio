@@ -61,7 +61,7 @@ Portfolio/
 ### Live Demo
 
 The portfolio is hosted and accessible at:  
-**[Insert your live URL here]** – *Update this with your actual deployment link.*
+**https://portfolio-xi-lovat-39.vercel.app**
 
 ---
 

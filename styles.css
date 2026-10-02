@@ -465,6 +465,13 @@ html[data-theme="light"] .scan-line{ mix-blend-mode: multiply; }
 
 @media (max-width: 860px){ .project-grid{ grid-template-columns: 1fr; } }
 
+.see-more-row{
+  display: flex; justify-content: center; margin-top: 32px;
+}
+.see-more-row .btn{ gap: 10px; }
+.see-more-row .btn svg{ transition: transform 0.25s ease; }
+.see-more-row .btn.expanded svg{ transform: rotate(180deg); }
+
 /* ============================================================
    TIMELINE (experience / education)
    ============================================================ */

@@ -68,21 +68,73 @@
     revealEls.forEach(function(el){ el.classList.add('in'); });
   }
 
-  /* ---------------- Project filtering --------------- */
+  /* ---------------- Project filtering + "See More" (All tab only) --------------- */
   const filterBtns = document.querySelectorAll('.filter-btn');
-  const projectCards = document.querySelectorAll('#projectGrid .project-card');
+  const projectCards = Array.prototype.slice.call(document.querySelectorAll('#projectGrid .project-card'));
+  const seeMoreBtn = document.getElementById('projectSeeMoreBtn');
+  const seeMoreText = document.getElementById('projectSeeMoreText');
+  const ALL_LIMIT = 4;
+  let currentFilter = 'all';
+  let allExpanded = false;
+
+  function showCard(card){
+    const wasHidden = card.style.display === 'none';
+    card.style.display = '';
+    if (wasHidden && !card.classList.contains('in')){
+      // card was programmatically hidden (never scrolled past the observer) —
+      // fade it in now instead of leaving it stuck at opacity:0
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){ card.classList.add('in'); });
+      });
+    }
+  }
+  function hideCard(card){
+    card.style.display = 'none';
+  }
+
+  function renderProjects(){
+    const matching = projectCards.filter(function(card){
+      const cats = card.getAttribute('data-cat').split(' ');
+      return currentFilter === 'all' || cats.indexOf(currentFilter) !== -1;
+    });
+
+    projectCards.forEach(function(card){
+      if (matching.indexOf(card) === -1){ hideCard(card); }
+    });
+
+    const limitApplies = currentFilter === 'all' && !allExpanded && matching.length > ALL_LIMIT;
+    matching.forEach(function(card, i){
+      if (limitApplies && i >= ALL_LIMIT){ hideCard(card); } else { showCard(card); }
+    });
+
+    if (currentFilter === 'all' && matching.length > ALL_LIMIT){
+      seeMoreBtn.style.display = '';
+      seeMoreBtn.classList.toggle('expanded', allExpanded);
+      seeMoreText.textContent = allExpanded ? 'Show Less' : 'See More';
+    } else {
+      seeMoreBtn.style.display = 'none';
+    }
+  }
+
   filterBtns.forEach(function(btn){
     btn.addEventListener('click', function(){
       filterBtns.forEach(function(b){ b.classList.remove('active'); });
       btn.classList.add('active');
-      const filter = btn.getAttribute('data-filter');
-      projectCards.forEach(function(card){
-        const cats = card.getAttribute('data-cat').split(' ');
-        const show = filter === 'all' || cats.indexOf(filter) !== -1;
-        card.style.display = show ? '' : 'none';
-      });
+      currentFilter = btn.getAttribute('data-filter');
+      allExpanded = false;
+      renderProjects();
     });
   });
+
+  seeMoreBtn.addEventListener('click', function(){
+    allExpanded = !allExpanded;
+    renderProjects();
+    if (!allExpanded){
+      document.getElementById('projects').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+
+  renderProjects();
 
   /* ---------------- Contact form validation + submission (Web3Forms) --------------- */
   const form = document.getElementById('contactForm');

@@ -129,9 +129,7 @@
   seeMoreBtn.addEventListener('click', function(){
     allExpanded = !allExpanded;
     renderProjects();
-    if (!allExpanded){
-      document.getElementById('projects').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    
   });
 
   renderProjects();

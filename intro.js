@@ -32,7 +32,6 @@
   function end(){
     if(ended) return; ended=true;
     el.classList.add('done');
-    try{ sessionStorage.setItem('introSeen','1'); }catch(e){}
     setTimeout(function(){ alive=false; root.classList.remove('intro-on'); }, 850);
   }
   skip.addEventListener('click',end);

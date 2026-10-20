@@ -15,8 +15,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles-cyber.css">
+<script>(function(){try{if(sessionStorage.getItem('introSeen')||matchMedia('(prefers-reduced-motion: reduce)').matches)return;}catch(e){}document.documentElement.classList.add('intro-on');})();</script>
 </head>
 <body>
+<div id="intro" aria-hidden="true"><canvas id="introRain"></canvas><div class="intro-term" id="introText"></div><button type="button" class="intro-skip" id="introSkip">[ skip intro ]</button></div>
 
 <!-- ============================================================
      NAVIGATION
@@ -799,5 +802,7 @@
 </div>
 
 <script src="script.js"></script>
+<script src="cyber.js"></script>
+<script src="intro.js"></script>
 </body>
 </html>

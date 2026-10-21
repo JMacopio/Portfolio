@@ -116,7 +116,7 @@ html.intro-on body{ overflow:hidden; }
 .project-media .project-img{
   position:absolute; inset:0; width:100%; height:100%;
   object-fit:contain;            /* whole logo visible, never cropped */
-  padding:22px;                  /* breathing room from the edges */
+  padding:2px;                  /* breathing room from the edges */
 }
 /* For a full-bleed screenshot instead of a logo, add class="project-img cover" */
 .project-media .project-img.cover{ object-fit:cover; padding:0; }

@@ -1,126 +1,99 @@
-# Portfolio Website
+# Jorge.dev — Personal Developer Portfolio
 
-**Personal Developer Portfolio** – A clean, modern portfolio website showcasing projects, certifications, and professional experience.
+[![Live site](https://img.shields.io/badge/live-portfolio--xi--lovat--39.vercel.app-39ff88?style=flat-square&labelColor=05080a)](https://portfolio-xi-lovat-39.vercel.app)
+![HTML5](https://img.shields.io/badge/HTML5-05080a?style=flat-square&logo=html5&logoColor=39ff88)
+![CSS3](https://img.shields.io/badge/CSS3-05080a?style=flat-square&logo=css3&logoColor=39ff88)
+![JavaScript](https://img.shields.io/badge/JavaScript-05080a?style=flat-square&logo=javascript&logoColor=39ff88)
 
-This repository contains the source code for my personal portfolio website, designed to present my work as a software developer. The site features a responsive layout, project showcases, downloadable resume, and a contact section with integrated email functionality.
+The portfolio of **Jorge Matthew M. Acopio**, an Information Technology student aiming for a career in cybersecurity and software development. It is a single-page static website with a terminal-inspired design, built with plain HTML, CSS and JavaScript and no framework or build step.
 
----
+**Live site:** https://portfolio-xi-lovat-39.vercel.app
 
-## ✨ Features
+![Portfolio home section](images/screenshot.png)
 
-- **Project Showcase** – Display of development projects with descriptions and GitHub links.
-- **Certifications** – A dedicated section for professional certifications and achievements.
-- **Resume Download** – Direct download link to a PDF version of my resume.
-- **Contact Form** – Integrated with Web3Forms for free email sending functionality.
-- **Responsive Design** – Optimized for viewing on desktop, tablet, and mobile devices.
-- **Clean UI** – Modern, minimalist design focused on readability and professional presentation.
+## Features
 
----
+- **Matrix-style intro** — a short, skippable code-rain intro (button, `Esc` or `Enter`). Disabled for visitors who prefer reduced motion.
+- **Terminal theme** — dark "terminal" look with a light "paper terminal" alternative, switched with the theme toggle.
+- **Hero section** — typed `$ whoami` prompt, typing effect for the role, a terminal-window profile photo and a scrolling ticker built from the skills list.
+- **Skills** — grouped skill cards with level indicators (advanced, intermediate, familiar).
+- **Projects** — seven project cards with filters (All, Mobile, Web, Desktop, Academic, Personal). The All view shows the first four; **See More / Show Less** reveals the rest.
+- **Experience and education** — timelines for the capstone work, independent projects and degrees.
+- **Certifications** — six certificate cards that open an image viewer (close with the X button, a click outside, or `Esc`).
+- **Resume** — download or view the PDF resume.
+- **Contact form** — client-side validation and a honeypot field, delivering messages to email through [Web3Forms](https://web3forms.com) with success and error messages.
+- **Responsive and accessible** — layouts for desktop, tablet and phone, keyboard focus outlines, and a reduced-motion mode.
 
-## 🛠️ Tech Stack
+## Tech stack
 
-- **HTML5** – Semantic markup structure
-- **CSS3** – Custom styling with responsive design
-- **JavaScript** – Interactive elements and form handling
-- **Web3Forms** – Free email-sending service for the contact form
+| Area | Technology |
+| --- | --- |
+| Structure | HTML5 |
+| Styling | CSS3 with custom properties (design tokens), Grid, media queries |
+| Interactivity | Vanilla JavaScript, Canvas API, IntersectionObserver, Fetch API |
+| Fonts | JetBrains Mono, Inter, Space Grotesk (Google Fonts) |
+| Contact form | Web3Forms |
+| Hosting | Vercel |
 
----
-
-## 📁 Project Structure
+## Project structure
 
 ```
 Portfolio/
-├── index.html          # Main landing page
-├── styles.css          # Custom styles and responsive design
-├── script.js           # Interactive features and form handling
-├── resume.pdf          # Downloadable resume file
-├── certs/              # Certifications and achievements
-└── README.md           # Project documentation
+├── index.html          # Page structure and content
+├── styles.css          # Base styles, design tokens, layout, components
+├── styles-cyber.css    # Terminal theme layered over the base styles (plus intro and project-image rules)
+├── script.js           # Theme toggle, menu, scroll reveal, project filter / See More, contact form, certificate viewer
+├── cyber.js            # Code-rain background, terminal photo frame, typed hero text, module ticker
+├── intro.js            # Skippable Matrix-style intro
+├── resume.pdf          # Downloadable resume
+├── favicon.svg         # Site icon
+├── images/             # Profile photo, project images and logos
+└── certs/              # Certificate images shown in the viewer
 ```
 
----
+## Run locally
 
-## 🚀 Getting Started
+No installation or build step is needed.
 
-### Prerequisites
-
-- A modern web browser (Chrome, Firefox, Safari, Edge)
-- (Optional) A local web server for development
-
-### Installation
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/JMacopio/Portfolio.git
-   ```
-
-2. **Open the website:**
-   - Navigate to the project folder.
-   - Open `index.html` in your browser.
-
-### Live Demo
-
-The portfolio is hosted and accessible at:  
-**https://portfolio-xi-lovat-39.vercel.app**
-
----
-
-## 📱 How to Use
-
-1. **Browse Projects** – Scroll through the projects section to view my work.
-2. **View Certifications** – Check the certifications section for professional credentials.
-3. **Download Resume** – Click the resume link to download a PDF copy.
-4. **Contact Me** – Use the contact form to send a message directly to my email.
-
----
-
-## 🔧 Customization
-
-### Updating Projects
-
-To add or modify projects, edit the project cards in `index.html`:
-
-```html
-<div class="project-card">
-    <h3>Project Name</h3>
-    <p>Project description goes here.</p>
-    <a href="https://github.com/yourusername/repo">View on GitHub</a>
-</div>
+```bash
+git clone https://github.com/JMacopio/Portfolio.git
+cd Portfolio
 ```
 
-### Updating Contact Form
+Open `index.html` in a browser. For a local server (optional):
 
-The contact form uses Web3Forms for email delivery. To configure your own endpoint:
-
-1. Sign up at [Web3Forms](https://web3forms.com/).
-2. Replace the `action` URL in the form with your own endpoint.
-3. Update the `accesskey` value in `script.js` if needed.
-
-### Styling Changes
-
-Modify `styles.css` to update colors, fonts, and layout:
-
-```css
-:root {
-    --primary-color: #your-color;
-    --font-family: 'Your Font', sans-serif;
-}
+```bash
+python3 -m http.server 8000
+# then visit http://localhost:8000
 ```
 
----
+## Customizing
 
-## 📄 License
+**Add or edit a project** — copy an existing `.project-card` block inside `#projectGrid` in `index.html`. The `data-cat` attribute controls which filters it appears under (`mobile`, `web`, `desktop`, `academic`, `personal`), for example `data-cat="web personal"`. Project images and logos go in `images/` and use `<img class="project-img" ...>` so they fit the card (add the `cover` class for full-width screenshots).
 
-All rights reserved. This project is for personal and portfolio purposes only. Please contact the author for permissions beyond personal reference.
+**Add a certificate** — add a `.cert-card` in `#certifications` and point its button's `data-cert-img` at the image in `certs/`, with a matching `data-cert-title`.
 
----
+**Change colors and fonts** — the theme variables live in `styles-cyber.css` (`--accent`, `--bg`, `--text`, and so on, with separate values for `html[data-theme="dark"]` and `html[data-theme="light"]`). Base values are in `styles.css`.
 
-## 👨‍💻 Author
+**Change the intro text** — edit the `lines` list at the top of `intro.js`. To remove the intro, delete its `<script>` tag, the `#intro` block and the small inline script in `index.html`.
 
-**Jorge Matthew Acopio** ([JMacopio](https://github.com/JMacopio))
+**Contact form** — create a free access key at [web3forms.com](https://web3forms.com) and set it as the `value` of the hidden `access_key` input inside the `#contactForm` in `index.html`. The key is visible in the page source by design of the service, so in the Web3Forms dashboard restrict it to your site's domain and keep spam protection on.
 
-Built as a personal portfolio to showcase software development projects, certifications, and professional experience.
+**Resume** — replace `resume.pdf` with your updated file (keep the same filename).
 
----
+## Deployment
 
-*Portfolio – A window into my work and journey as a developer.*
+The site is plain static files, so it can be hosted anywhere. It is currently deployed on [Vercel](https://vercel.com): import the repository and deploy with no build command and the project root as the output directory.
+
+## Notes
+
+- The theme choice is not remembered between visits.
+- The contact form needs an internet connection to reach Web3Forms.
+
+## License
+
+All rights reserved. This repository is for personal portfolio purposes; please contact the author for permission to reuse the content, photos or certificates.
+
+## Author
+
+**Jorge Matthew M. Acopio** — [GitHub](https://github.com/JMacopio) · [LinkedIn](https://www.linkedin.com/in/jorge-matthew-acopio-73659722b) · acopiojorgematthew@gmail.com
